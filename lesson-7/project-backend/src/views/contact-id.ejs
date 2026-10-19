@@ -1,0 +1,6 @@
+<%- include('partials/header', {title}) %>
+    <% if(contact) { %>
+        <p>Email: <%= contact.email %></p>
+        <p>Phone: <%= contact.phone %></p>
+    <% } %>
+<%- include('partials/footer') %>

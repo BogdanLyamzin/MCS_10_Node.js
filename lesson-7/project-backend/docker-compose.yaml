@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTRES_DB=my-contacts
+    ports:
+      - 5432:5432
+    volumes:
+      - my_contacts_data:/var/lib/postresql/data
+
+  app:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql://user:password@localhost:5432/my-contacts?schema=public
+    ports:
+      - 3000:3000
+
+volumes:
+  my_contacts_data:
