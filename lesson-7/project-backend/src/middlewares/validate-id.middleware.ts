@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { type Request, type Response, type NextFunction } from "express";
 
-const validateId = (schema: z.ZodType) => {
+const validateId = (schema: z.ZodType<{id: unknown}>) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.params);
     if (!result.success) {
@@ -10,7 +10,7 @@ const validateId = (schema: z.ZodType) => {
         issues: result.error.issues,
       });
     }
-    req.params.id = result.data.id;
+    res.locals.id = result.data.id;
     next();
   };
 };

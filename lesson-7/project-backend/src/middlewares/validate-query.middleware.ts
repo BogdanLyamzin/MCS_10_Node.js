@@ -10,8 +10,8 @@ const validateQuery = (schema: z.ZodType) => {
         issues: result.error.issues,
       });
     }
-    req.locals = {};
-    req.locals.query = result.data;
+
+    res.locals.query = result.data;
     next();
   };
 };

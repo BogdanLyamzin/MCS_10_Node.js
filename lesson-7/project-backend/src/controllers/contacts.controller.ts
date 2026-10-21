@@ -4,8 +4,10 @@ import prisma from "../db.ts";
 
 import HttpError from "../classes/HttpError.ts";
 
+import { type ContactId } from "../validation/contacts.validation.ts";
+
 export const getContacts = async (req: Request, res: Response) => {
- const {page, limit} = req.locals.query;
+ const {page, limit} = res.locals.query;
   const [contacts, total] =  await Promise.all([prisma.contact.findMany({
     skip: (page - 1) * limit,
     take: limit,
@@ -24,9 +26,9 @@ export const getContacts = async (req: Request, res: Response) => {
 
 export const getContactsById = async (
   req: Request<{ id: string }>,
-  res: Response,
+  res: Response<unknown, ContactId>,
 ) => {
-  const {id} = req.params;
+  const {id} = res.locals;
   const contact = await prisma.contact.findUnique({
     where: {
       id

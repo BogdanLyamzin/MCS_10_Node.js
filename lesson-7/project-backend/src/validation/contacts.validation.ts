@@ -4,6 +4,8 @@ export const contactIdSchema = z.strictObject({
   id: z.coerce.number().int().positive()
 })
 
+export type ContactId = z.infer<typeof contactIdSchema>;
+
 export const createContactSchema = z.strictObject({
   name: z.string().trim().min(2).max(100),
   email: z.email(),
